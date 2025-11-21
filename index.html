@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CyberEX Web3 Wallet</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+:root{
+  --neon:#00eaff;
+  --pink:#ff2dfc;
+  --violet:#9b5cff;
+  --bg:#020617;
+}
+
+body{
+  margin:0;
+  background: radial-gradient(circle at top, #081022, #000 70%);
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+  color:white;
+}
+
+/* BACKGROUND GRID */
+.grid-bg{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(var(--neon) 1px, transparent 1px),
+    linear-gradient(90deg, var(--neon) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity:0.06;
+  animation: gridMove 15s linear infinite;
+}
+
+@keyframes gridMove{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(50px);}
+}
+
+/* LOGO */
+.logo-text{
+  font-size:64px;
+  font-weight:800;
+  letter-spacing:6px;
+  text-shadow:0 0 20px var(--neon),0 0 40px var(--pink);
+  animation: logoGlow 4s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+  0%,100%{text-shadow:0 0 20px var(--neon);}
+  50%{text-shadow:0 0 40px var(--pink);}
+}
+
+/* WALLET CARD */
+.wallet-card{
+  width:380px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 0 30px rgba(0,255,255,0.08);
+  transform:rotateY(-12deg) rotateX(8deg);
+}
+
+.connect-btn{
+  background:linear-gradient(135deg,var(--neon),var(--pink));
+  padding:14px 32px;
+  font-size:18px;
+  font-weight:600;
+  border-radius:12px;
+  transition:.25s;
+  box-shadow:0 0 20px var(--neon);
+}
+
+.connect-btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 30px var(--pink);
+}
+
+/* Floating particles */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:var(--neon);
+  border-radius:50%;
+  filter:blur(2px);
+  opacity:.7;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- RANDOM PARTICLES -->
+<script>
+for(let i=0;i<40;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDelay=Math.random()*5+"s";
+  p.style.animationDuration=5+Math.random()*5+"s";
+  document.body.appendChild(p);
+}
+</script>
+
+<div class="w-full h-screen flex flex-col items-center justify-center relative z-50">
+
+  <!-- LOGO -->
+  <div class="logo-text mb-6">CYBEREX</div>
+  <div class="text-[#9ca3af] text-lg mb-10 tracking-wide">
+    Next-Gen Web3 Wallet • AI-Powered • Ultra Secure
+  </div>
+
+  <!-- WALLET CARD -->
+  <div class="wallet-card">
+    <div class="text-xl font-semibold mb-3">Your Wallet</div>
+
+    <div class="mb-4">
+      <div class="text-[#9ca3af] text-sm">Balance</div>
+      <div class="text-3xl font-bold mt-1 text-cyan-300">12.934 ETH</div>
+    </div>
+
+    <div class="mt-5 mb-5">
+      <div class="text-[#9ca3af] text-sm mb-1">Wallet Address</div>
+      <div class="text-md font-mono opacity-90">0xA92d...41E3</div>
+    </div>
+
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=cyberex" class="mx-auto rounded-lg shadow-lg" />
+
+  </div>
+
+  <button class="connect-btn mt-10">Connect Wallet</button>
+
+</div>
+
+<script>
+gsap.from(".wallet-card",{
+  duration:1.5,
+  opacity:0,
+  y:80,
+  ease:"power3.out"
+});
+gsap.from(".connect-btn",{
+  duration:1.4,
+  opacity:0,
+  scale:0.5,
+  delay:0.3,
+  ease:"power3.out"
+});
+</script>
+
+</body>
+</html>
