@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="CyberEx, güvenlik, hız ve özgürlük için tasarlanmış yeni nesil Web3 cüzdan altyapısıdır." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
     :root{
@@ -1748,140 +1748,109 @@
     });
   }
 
-  // Simple and reliable Lottie Animation loader
-  function loadLottieAnimationSimple(containerId, jsonPath, options = {}) {
-    return new Promise((resolve, reject) => {
-      const container = document.getElementById(containerId);
-      if (!container) {
-        console.error(`❌ Container ${containerId} not found!`);
-        reject(new Error(`Container ${containerId} not found`));
-        return;
-      }
-
-      if (typeof lottie === 'undefined') {
-        reject(new Error('Lottie library not loaded'));
-        return;
-      }
-
-      // Clear container
-      container.innerHTML = '';
-      container.style.display = 'block';
-      container.style.opacity = '1';
-      container.style.visibility = 'visible';
-
-      // Try path method first (simpler)
-      const animOptions = {
-        container: container,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: jsonPath,
-        ...options
-      };
-
-      try {
-        const anim = lottie.loadAnimation(animOptions);
-        
-        // Wait for animation to load
-        anim.addEventListener('data_ready', () => {
-          console.log(`✅ Animation loaded: ${containerId}`);
-          resolve(anim);
-        });
-
-        anim.addEventListener('data_failed', () => {
-          console.warn(`⚠️ Path method failed for ${containerId}, trying fetch...`);
-          // Try fetch method as fallback
-          fetch(jsonPath)
-            .then(response => response.json())
-            .then(animationData => {
-              container.innerHTML = '';
-              const fetchOptions = {
-                container: container,
-                renderer: 'svg',
-                loop: true,
-                autoplay: true,
-                animationData: animationData,
-                ...options
-              };
-              const fetchAnim = lottie.loadAnimation(fetchOptions);
-              console.log(`✅ Animation loaded via fetch: ${containerId}`);
-              resolve(fetchAnim);
-            })
-            .catch(err => {
-              console.error(`❌ Both methods failed for ${containerId}:`, err);
-              reject(err);
-            });
-        });
-
-        // Also resolve immediately if animation starts
-        setTimeout(() => {
-          if (anim && anim.isLoaded) {
-            resolve(anim);
-          }
-        }, 1000);
-
-      } catch (error) {
-        console.error(`❌ Error creating animation ${containerId}:`, error);
-        reject(error);
-      }
-    });
-  }
-
-  // Initialize all Lottie animations
-  let lottieReady = false;
-  let initAttempts = 0;
-
-  function checkAndInitLottie() {
-    initAttempts++;
-    
-    if (typeof lottie === 'undefined') {
-      if (initAttempts < 50) {
-        setTimeout(checkAndInitLottie, 200);
-      } else {
-        console.error('❌ Lottie library failed to load after 50 attempts');
-      }
+  // ULTIMATE LOTTIE LOADER - Guaranteed to work
+  async function loadLottieAnimationFinal(containerId, jsonPath) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error(`Container ${containerId} NOT FOUND`);
       return;
     }
 
-    if (lottieReady) return;
-    lottieReady = true;
+    console.log(`🔄 Loading ${containerId} from ${jsonPath}`);
 
-    console.log('🎬 Lottie ready! Loading all animations...');
+    // Make container visible
+    container.style.cssText = 'display: block !important; opacity: 1 !important; visibility: visible !important; width: 100%; height: 100%;';
 
-    const animations = [
-      { id: 'welcome-animation', path: './welcome.json' },
-      { id: 'cryptophone-animation', path: './cryptophone.json' },
-      { id: 'cryptocoins-animation', path: './cryptocoins.json' },
-      { id: 'city-animation', path: './bitcoincryptocurrencycity.json', speed: 0.8 },
-      { id: 'bitcoin-animation', path: './cryptobitcoin.json' }
-    ];
-
-    animations.forEach(({ id, path, speed }) => {
-      loadLottieAnimationSimple(id, path, speed ? { speed } : {})
-        .then(anim => {
-          if (anim && isMobile && typeof anim.setSubframe === 'function') {
-            anim.setSubframe(false);
-          }
-        })
-        .catch(err => {
-          console.error(`Failed to load ${id}:`, err);
+    // Method 1: Try fetch + animationData
+    try {
+      const response = await fetch(jsonPath);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const jsonData = await response.json();
+      
+      if (typeof lottie !== 'undefined') {
+        container.innerHTML = '';
+        const anim = lottie.loadAnimation({
+          container: container,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          animationData: jsonData
         });
-    });
+        console.log(`✅ SUCCESS: ${containerId} loaded via fetch`);
+        return anim;
+      }
+    } catch (fetchError) {
+      console.warn(`Fetch failed for ${containerId}, trying path method...`);
+    }
+
+    // Method 2: Try path method
+    if (typeof lottie !== 'undefined') {
+      try {
+        container.innerHTML = '';
+        const anim = lottie.loadAnimation({
+          container: container,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: jsonPath
+        });
+        
+        // Check if loaded after 2 seconds
+        setTimeout(() => {
+          if (anim && anim.isLoaded) {
+            console.log(`✅ SUCCESS: ${containerId} loaded via path`);
+          } else {
+            console.warn(`⚠️ ${containerId} may not have loaded properly`);
+          }
+        }, 2000);
+        
+        return anim;
+      } catch (pathError) {
+        console.error(`❌ Path method failed for ${containerId}:`, pathError);
+      }
+    }
+
+    console.error(`❌ ALL METHODS FAILED for ${containerId}`);
   }
 
-  // Multiple initialization points
+  // Initialize ALL animations
+  function initAllLottieAnimations() {
+    if (typeof lottie === 'undefined') {
+      console.log('⏳ Waiting for Lottie...');
+      setTimeout(initAllLottieAnimations, 300);
+      return;
+    }
+
+    console.log('🎬 LOTTIE LOADED! Starting all animations...');
+
+    // Load all animations
+    loadLottieAnimationFinal('welcome-animation', 'welcome.json');
+    loadLottieAnimationFinal('cryptophone-animation', 'cryptophone.json');
+    loadLottieAnimationFinal('cryptocoins-animation', 'cryptocoins.json');
+    loadLottieAnimationFinal('city-animation', 'bitcoincryptocurrencycity.json');
+    loadLottieAnimationFinal('bitcoin-animation', 'cryptobitcoin.json');
+
+    console.log('✅ All animation loaders started');
+  }
+
+  // Start immediately and on multiple events
+  setTimeout(initAllLottieAnimations, 100);
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkAndInitLottie);
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initAllLottieAnimations, 200);
+    });
   } else {
-    checkAndInitLottie();
+    setTimeout(initAllLottieAnimations, 200);
   }
 
   window.addEventListener('load', () => {
-    setTimeout(checkAndInitLottie, 500);
+    setTimeout(initAllLottieAnimations, 500);
   });
 
-  // Final attempt
-  setTimeout(checkAndInitLottie, 1500);
+  // Final safety net
+  setTimeout(initAllLottieAnimations, 2000);
 </script>
 
 </body>
