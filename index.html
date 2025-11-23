@@ -859,7 +859,7 @@
       <div class="flex flex-col gap-6 justify-center lg:justify-end flex-1 fade-in slide-in-right">
         <!-- Welcome Lottie Animation -->
         <div class="lottie-container">
-          <div id="welcome-animation" class="lottie-hero" style="width: 300px; height: 300px;"></div>
+          <div id="welcome-animation" class="lottie-hero" style="width: 300px; height: 300px; min-height: 300px;"></div>
         </div>
         
         <!-- Balance Card -->
@@ -894,7 +894,7 @@
 
         <!-- Crypto Phone Lottie Animation -->
         <div class="lottie-container">
-          <div id="cryptophone-animation" class="lottie-hero" style="width: 280px; height: 280px;"></div>
+          <div id="cryptophone-animation" class="lottie-hero" style="width: 280px; height: 280px; min-height: 280px;"></div>
         </div>
 
         <!-- Phone mockup -->
@@ -964,7 +964,7 @@
           </p>
         </div>
         <div class="lottie-container flex-1 flex justify-center">
-          <div id="cryptocoins-animation" class="lottie-feature" style="width: 250px; height: 250px;"></div>
+          <div id="cryptocoins-animation" class="lottie-feature" style="width: 250px; height: 250px; min-height: 250px;"></div>
         </div>
       </div>
 
@@ -1199,7 +1199,7 @@
   <section class="stats-section py-16 fade-in">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="lottie-container mb-8">
-        <div id="city-animation" class="lottie-stats" style="width: 100%; max-width: 600px; height: 200px; margin: 0 auto;"></div>
+        <div id="city-animation" class="lottie-stats" style="width: 100%; max-width: 600px; height: 200px; min-height: 200px; margin: 0 auto;"></div>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
         <div class="stat-item">
@@ -1288,7 +1288,7 @@
       <div class="cta-section fade-in">
         <div class="relative z-10">
           <div class="lottie-container mb-6">
-            <div id="bitcoin-animation" class="lottie-cta" style="width: 300px; height: 300px; margin: 0 auto;"></div>
+            <div id="bitcoin-animation" class="lottie-cta" style="width: 300px; height: 300px; min-height: 300px; margin: 0 auto;"></div>
           </div>
           <h2 class="text-3xl sm:text-4xl font-bold mb-4" data-i18n="cta.title">Web3'e katılın</h2>
           <p class="text-lg text-slate-300 mb-8 max-w-2xl mx-auto" data-i18n="cta.subtitle">
@@ -1748,18 +1748,21 @@
     });
   }
 
-  // Load Lottie Animations
+  // Load Lottie Animations - Enhanced version
   function loadLottieAnimation(containerId, jsonPath, options = {}) {
     const container = document.getElementById(containerId);
     if (!container) {
-      console.warn(`Container ${containerId} not found`);
+      console.error(`❌ Container ${containerId} not found!`);
       return null;
     }
 
     if (typeof lottie === 'undefined') {
-      console.warn('Lottie library not loaded yet');
+      console.warn(`⚠️ Lottie library not loaded for ${containerId}`);
       return null;
     }
+
+    // Clear container first
+    container.innerHTML = '';
 
     const defaultOptions = {
       container: container,
@@ -1772,59 +1775,94 @@
 
     try {
       const anim = lottie.loadAnimation(defaultOptions);
-      console.log(`Loaded animation: ${containerId}`);
+      console.log(`✅ Loaded animation: ${containerId} from ${jsonPath}`);
+      
+      // Ensure visibility
+      container.style.display = 'block';
+      container.style.opacity = '1';
+      
       return anim;
     } catch (error) {
-      console.error(`Error loading animation ${containerId}:`, error);
+      console.error(`❌ Error loading animation ${containerId}:`, error);
       return null;
     }
   }
 
-  // Initialize Lottie Animations
+  // Initialize Lottie Animations - Multiple attempts
+  let lottieInitAttempts = 0;
+  const maxAttempts = 20;
+
   function initLottieAnimations() {
+    lottieInitAttempts++;
+    
     // Check if Lottie is loaded
     if (typeof lottie === 'undefined') {
-      console.log('Waiting for Lottie library...');
-      setTimeout(initLottieAnimations, 200);
-      return;
+      if (lottieInitAttempts < maxAttempts) {
+        console.log(`⏳ Waiting for Lottie library... (attempt ${lottieInitAttempts})`);
+        setTimeout(initLottieAnimations, 300);
+        return;
+      } else {
+        console.error('❌ Lottie library failed to load after multiple attempts');
+        return;
+      }
     }
 
-    console.log('Lottie library loaded, initializing animations...');
+    console.log('🎬 Lottie library loaded! Initializing animations...');
 
-    // Load all animations
-    const animations = {
-      welcome: loadLottieAnimation('welcome-animation', 'welcome.json'),
-      cryptophone: loadLottieAnimation('cryptophone-animation', 'cryptophone.json'),
-      cryptocoins: loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json'),
-      city: loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json', { speed: 0.8 }),
-      bitcoin: loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json')
-    };
+    // Wait a bit more to ensure everything is ready
+    setTimeout(() => {
+      // Load all animations with retry mechanism
+      const animationsToLoad = [
+        { id: 'welcome-animation', path: 'welcome.json', options: {} },
+        { id: 'cryptophone-animation', path: 'cryptophone.json', options: {} },
+        { id: 'cryptocoins-animation', path: 'cryptocoins.json', options: {} },
+        { id: 'city-animation', path: 'bitcoincryptocurrencycity.json', options: { speed: 0.8 } },
+        { id: 'bitcoin-animation', path: 'cryptobitcoin.json', options: {} }
+      ];
 
-    // On mobile, reduce animation quality
-    if (isMobile) {
-      Object.values(animations).forEach(anim => {
-        if (anim && anim.setSubframe) {
-          anim.setSubframe(false);
+      const loadedAnimations = {};
+
+      animationsToLoad.forEach(({ id, path, options }) => {
+        const anim = loadLottieAnimation(id, path, options);
+        if (anim) {
+          loadedAnimations[id] = anim;
+        } else {
+          // Retry once after 1 second
+          setTimeout(() => {
+            loadLottieAnimation(id, path, options);
+          }, 1000);
         }
       });
-    }
 
-    console.log('All Lottie animations initialized');
+      // On mobile, reduce animation quality
+      if (isMobile) {
+        Object.values(loadedAnimations).forEach(anim => {
+          if (anim && typeof anim.setSubframe === 'function') {
+            anim.setSubframe(false);
+          }
+        });
+      }
+
+      console.log(`✅ Initialized ${Object.keys(loadedAnimations).length} Lottie animations`);
+    }, 200);
   }
 
-  // Wait for DOM and Lottie to be ready
+  // Multiple initialization strategies
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(initLottieAnimations, 500);
+      setTimeout(initLottieAnimations, 300);
     });
   } else {
-    setTimeout(initLottieAnimations, 500);
+    setTimeout(initLottieAnimations, 300);
   }
 
   // Also try after window load
   window.addEventListener('load', () => {
-    setTimeout(initLottieAnimations, 300);
+    setTimeout(initLottieAnimations, 500);
   });
+
+  // Final attempt after everything loads
+  setTimeout(initLottieAnimations, 1000);
 </script>
 
 </body>
