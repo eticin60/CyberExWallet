@@ -685,7 +685,7 @@
       margin: 0 auto;
     }
 
-    /* Mobile Optimizations */
+    /* Mobile Optimizations - Only reduce, don't disable */
     @media (max-width: 768px) {
       .lottie-hero {
         max-width: 200px;
@@ -706,32 +706,30 @@
         filter: none;
       }
 
-      /* Disable heavy animations on mobile */
+      /* Lighter hover effects on mobile */
       .feature-card:hover {
         transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 20px 50px rgba(15,23,42,0.9), 0 0 30px rgba(0,229,255,0.2);
       }
 
       .balance-card:hover {
         transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 50px rgba(0,229,255,0.3);
       }
 
-      /* Reduce particle count */
+      /* Hide particles canvas on mobile */
       #particles {
-        display: none;
+        display: none !important;
       }
 
-      /* Simplify 3D transforms */
+      /* Keep phone animation but simpler */
       .phone {
-        transform: none;
-        animation: none;
+        animation: floatPhoneMobile 6s ease-in-out infinite;
       }
 
-      .feature-card {
-        transform-style: flat;
-      }
-
-      .balance-card {
-        transform-style: flat;
+      @keyframes floatPhoneMobile {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
       }
     }
 
@@ -773,7 +771,7 @@
 <body>
 
 <div class="bg-network"></div>
-<canvas id="particles" class="fixed inset-0 z-0 pointer-events-none hidden md:block"></canvas>
+<canvas id="particles" class="fixed inset-0 z-0 pointer-events-none"></canvas>
 
 <!-- Scroll indicator -->
 <div class="scroll-indicator hidden lg:flex">
@@ -860,7 +858,7 @@
       <!-- Right: Balance Card & Phone mockup -->
       <div class="flex flex-col gap-6 justify-center lg:justify-end flex-1 fade-in slide-in-right">
         <!-- Welcome Lottie Animation -->
-        <div class="lottie-container hidden md:block">
+        <div class="lottie-container">
           <div id="welcome-animation" class="lottie-hero" style="width: 300px; height: 300px;"></div>
         </div>
         
@@ -895,7 +893,7 @@
         </div>
 
         <!-- Crypto Phone Lottie Animation -->
-        <div class="lottie-container hidden md:block">
+        <div class="lottie-container">
           <div id="cryptophone-animation" class="lottie-hero" style="width: 280px; height: 280px;"></div>
         </div>
 
@@ -1200,7 +1198,7 @@
   <!-- STATS SECTION -->
   <section class="stats-section py-16 fade-in">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="lottie-container mb-8 hidden md:block">
+      <div class="lottie-container mb-8">
         <div id="city-animation" class="lottie-stats" style="width: 100%; max-width: 600px; height: 200px; margin: 0 auto;"></div>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -1289,7 +1287,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="cta-section fade-in">
         <div class="relative z-10">
-          <div class="lottie-container mb-6 hidden md:block">
+          <div class="lottie-container mb-6">
             <div id="bitcoin-animation" class="lottie-cta" style="width: 300px; height: 300px; margin: 0 auto;"></div>
           </div>
           <h2 class="text-3xl sm:text-4xl font-bold mb-4" data-i18n="cta.title">Web3'e katılın</h2>
@@ -1597,27 +1595,26 @@
     });
   }
 
-  // 3D Mouse Tracking - Disabled on mobile for performance
-  if (!isMobile) {
-    // 3D Mouse Tracking for Phone
-    const phone = document.querySelector('.phone');
-    if (phone) {
-      phone.addEventListener('mousemove', (e) => {
-        const rect = phone.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        phone.style.transform = `perspective(1000px) rotateX(${10 + rotateX}deg) rotateY(${-16 + rotateY}deg) translateZ(0)`;
-      });
-      phone.addEventListener('mouseleave', () => {
-        phone.style.transform = '';
-      });
-    }
+  // 3D Mouse Tracking for Phone
+  const phone = document.querySelector('.phone');
+  if (phone && !isMobile) {
+    phone.addEventListener('mousemove', (e) => {
+      const rect = phone.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 20;
+      const rotateY = (centerX - x) / 20;
+      phone.style.transform = `perspective(1000px) rotateX(${10 + rotateX}deg) rotateY(${-16 + rotateY}deg) translateZ(0)`;
+    });
+    phone.addEventListener('mouseleave', () => {
+      phone.style.transform = '';
+    });
+  }
 
-    // 3D Mouse Tracking for Feature Cards
+  // 3D Mouse Tracking for Feature Cards
+  if (!isMobile) {
     document.querySelectorAll('.feature-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -1633,11 +1630,13 @@
         card.style.transform = '';
       });
     });
+  }
 
-    // 3D Mouse Tracking for Balance Card
-    const balanceCard = document.querySelector('.balance-card');
-    if (balanceCard) {
-      // Parallax scroll effect
+  // 3D Mouse Tracking for Balance Card
+  const balanceCard = document.querySelector('.balance-card');
+  if (balanceCard) {
+    if (!isMobile) {
+      // Parallax scroll effect - desktop only
       window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
         const rate = scrolled * 0.3;
@@ -1646,7 +1645,7 @@
         }
       });
 
-      // 3D mouse tracking
+      // 3D mouse tracking - desktop only
       balanceCard.addEventListener('mousemove', (e) => {
         const rect = balanceCard.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -1669,13 +1668,13 @@
   const canvas = document.getElementById('particles');
   const isMobile = window.innerWidth <= 768;
   
-  if (canvas && !isMobile) {
+  if (canvas) {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     const particles = [];
-    const particleCount = 50; // Reduced from 80
+    const particleCount = isMobile ? 0 : 80; // Full count on desktop, disabled on mobile
 
     class Particle {
       constructor() {
@@ -1709,6 +1708,8 @@
     }
 
     function animateParticles() {
+      if (isMobile) return; // Don't animate on mobile
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
@@ -1737,7 +1738,9 @@
       requestAnimationFrame(animateParticles);
     }
 
-    animateParticles();
+    if (!isMobile) {
+      animateParticles();
+    }
 
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
@@ -1782,17 +1785,21 @@
       if (typeof lottie !== 'undefined') {
         clearInterval(checkLottie);
         
-        // Load animations - fewer on mobile for performance
-        if (!isMobile) {
-          loadLottieAnimation('welcome-animation', 'welcome.json');
-          loadLottieAnimation('cryptophone-animation', 'cryptophone.json');
-          loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json');
-          loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json', { speed: 0.8 });
-          loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json');
-        } else {
-          // Only load essential animations on mobile
-          loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json', { speed: 0.7 });
-          loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json', { speed: 0.7 });
+        // Load all animations on desktop
+        loadLottieAnimation('welcome-animation', 'welcome.json');
+        loadLottieAnimation('cryptophone-animation', 'cryptophone.json');
+        loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json');
+        loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json', { speed: 0.8 });
+        loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json');
+        
+        // On mobile, reduce animation quality but keep them
+        if (isMobile) {
+          // Reduce quality for mobile performance
+          document.querySelectorAll('[id$="-animation"]').forEach(el => {
+            if (el._lottie) {
+              el._lottie.setSubframe(false);
+            }
+          });
         }
       }
     }, 100);
