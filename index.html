@@ -836,14 +836,16 @@
       </div>
     </div>
     
+    <!-- Welcome Animation - Top Center -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 mb-8 relative z-10">
+      <div class="lottie-container flex justify-center">
+        <div id="welcome-animation" class="lottie-hero" style="width: 500px; height: 200px; min-height: 200px; max-width: 100%;"></div>
+      </div>
+    </div>
+    
     <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12 relative z-10">
       <!-- Left -->
       <div class="max-w-xl fade-in slide-in-left">
-        <!-- Welcome Animation - Large and Prominent -->
-        <div class="lottie-container mb-6 -ml-8">
-          <div id="welcome-animation" class="lottie-hero" style="width: 400px; height: 400px; min-height: 400px; max-width: 100%;"></div>
-        </div>
-        
         <div class="pill inline-flex items-center gap-2 mb-4 bg-slate-900/70 text-[0.7rem]">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)] animate-pulse"></span>
           <span data-i18n="hero.badge">WEB3'ÜN GELECEK NESİL CÜZDANI</span>
@@ -887,29 +889,104 @@
           </div>
         </div>
 
+        <!-- Highlight Card -->
+        <div class="relative p-6 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 border border-cyan-500/30 mb-6 overflow-hidden group hover:border-cyan-400/50 transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-2xl font-bold shadow-lg shadow-cyan-400/50">
+                ⚡
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold mb-2 grad-text">Hızlı ve Güvenli İşlemler</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                  Saniyeler içinde token transferleri, akıllı sözleşme etkileşimleri ve çoklu zincir işlemleri. 
+                  <span class="text-cyan-400 font-medium">Zero-knowledge</span> teknolojisi ile maksimum güvenlik.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Preview Cards -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50 hover:border-cyan-400/30 transition-all group">
+            <div class="text-2xl font-bold grad-text mb-1">150+</div>
+            <div class="text-xs text-slate-400">Desteklenen Token</div>
+            <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full w-3/4 group-hover:w-full transition-all duration-500"></div>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50 hover:border-purple-400/30 transition-all group">
+            <div class="text-2xl font-bold grad-text mb-1">24/7</div>
+            <div class="text-xs text-slate-400">Müşteri Desteği</div>
+            <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full w-4/5 group-hover:w-full transition-all duration-500"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Additional Crypto Animation -->
         <div class="lottie-container mt-4 mb-4">
           <div id="cryptocoins-animation" class="lottie-hero" style="width: 100%; height: 120px; min-height: 120px; opacity: 0.7;"></div>
         </div>
 
-        <!-- Trust Indicators -->
-        <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-slate-400 pt-4 border-t border-slate-800/50">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-cyan-400/50">5M+</div>
-            <span>Aktif Kullanıcı</span>
+        <!-- Trust Indicators with Left Animation -->
+        <div class="pt-4 border-t border-slate-800/50">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <!-- Left: Bitcoin Animation -->
+            <div class="flex-shrink-0">
+              <div class="lottie-container">
+                <div id="bitcoin-animation" class="lottie-hero" style="width: 120px; height: 120px; min-height: 120px; opacity: 0.8;"></div>
+              </div>
+            </div>
+            
+            <!-- Right: Trust Indicators -->
+            <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-slate-400 flex-1">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-cyan-400/50">5M+</div>
+                <span>Aktif Kullanıcı</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-purple-400/50">50+</div>
+                <span>Zincir Desteği</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-orange-400/50">99%</div>
+                <span>Uptime</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-emerald-400/50">10K+</div>
+                <span>Dapp Entegrasyonu</span>
+              </div>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-purple-400/50">50+</div>
-            <span>Zincir Desteği</span>
+        </div>
+
+        <!-- Bottom Content - Additional Features -->
+        <div class="mt-8 pt-6 border-t border-slate-800/50">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-cyan-400/50 transition-all group">
+              <div class="text-3xl mb-2">🔒</div>
+              <div class="text-sm font-semibold text-cyan-300 mb-1">Güvenlik</div>
+              <div class="text-xs text-slate-400">End-to-end şifreleme</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-emerald-400/50 transition-all group">
+              <div class="text-3xl mb-2">⚡</div>
+              <div class="text-sm font-semibold text-emerald-300 mb-1">Hız</div>
+              <div class="text-xs text-slate-400">Anında işlem onayı</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-purple-400/50 transition-all group">
+              <div class="text-3xl mb-2">🌐</div>
+              <div class="text-sm font-semibold text-purple-300 mb-1">Ekosistem</div>
+              <div class="text-xs text-slate-400">Binlerce DApp desteği</div>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-orange-400/50">99%</div>
-            <span>Uptime</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-emerald-400/50">10K+</div>
-            <span>Dapp Entegrasyonu</span>
-          </div>
+        </div>
+
+        <!-- Bottom Animation -->
+        <div class="lottie-container mt-6">
+          <div id="loadingcrypto-animation" class="lottie-hero" style="width: 100%; height: 100px; min-height: 100px; opacity: 0.6;"></div>
         </div>
       </div>
 
