@@ -1334,6 +1334,9 @@
 </footer>
 
 <script>
+  // CRITICAL: Define isMobile FIRST before anything uses it
+  const isMobile = window.innerWidth <= 768;
+
   // Language translations
   const translations = {
     tr: {
@@ -1666,7 +1669,6 @@
 
   // Particle System - Disabled on mobile for performance
   const canvas = document.getElementById('particles');
-  const isMobile = window.innerWidth <= 768;
   
   if (canvas) {
     const ctx = canvas.getContext('2d');
