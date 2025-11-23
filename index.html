@@ -1751,9 +1751,14 @@
   // Load Lottie Animations
   function loadLottieAnimation(containerId, jsonPath, options = {}) {
     const container = document.getElementById(containerId);
-    if (!container || typeof lottie === 'undefined') {
-      console.warn(`Lottie not loaded or container ${containerId} not found`);
-      return;
+    if (!container) {
+      console.warn(`Container ${containerId} not found`);
+      return null;
+    }
+
+    if (typeof lottie === 'undefined') {
+      console.warn('Lottie library not loaded yet');
+      return null;
     }
 
     const defaultOptions = {
@@ -1766,52 +1771,60 @@
     };
 
     try {
-      lottie.loadAnimation(defaultOptions);
+      const anim = lottie.loadAnimation(defaultOptions);
+      console.log(`Loaded animation: ${containerId}`);
+      return anim;
     } catch (error) {
       console.error(`Error loading animation ${containerId}:`, error);
+      return null;
     }
+  }
+
+  // Initialize Lottie Animations
+  function initLottieAnimations() {
+    // Check if Lottie is loaded
+    if (typeof lottie === 'undefined') {
+      console.log('Waiting for Lottie library...');
+      setTimeout(initLottieAnimations, 200);
+      return;
+    }
+
+    console.log('Lottie library loaded, initializing animations...');
+
+    // Load all animations
+    const animations = {
+      welcome: loadLottieAnimation('welcome-animation', 'welcome.json'),
+      cryptophone: loadLottieAnimation('cryptophone-animation', 'cryptophone.json'),
+      cryptocoins: loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json'),
+      city: loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json', { speed: 0.8 }),
+      bitcoin: loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json')
+    };
+
+    // On mobile, reduce animation quality
+    if (isMobile) {
+      Object.values(animations).forEach(anim => {
+        if (anim && anim.setSubframe) {
+          anim.setSubframe(false);
+        }
+      });
+    }
+
+    console.log('All Lottie animations initialized');
   }
 
   // Wait for DOM and Lottie to be ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLottieAnimations);
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initLottieAnimations, 500);
+    });
   } else {
-    initLottieAnimations();
+    setTimeout(initLottieAnimations, 500);
   }
 
-  function initLottieAnimations() {
-    // Wait a bit for Lottie library to load
-    const checkLottie = setInterval(() => {
-      if (typeof lottie !== 'undefined') {
-        clearInterval(checkLottie);
-        
-        // Load all animations on desktop
-        loadLottieAnimation('welcome-animation', 'welcome.json');
-        loadLottieAnimation('cryptophone-animation', 'cryptophone.json');
-        loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json');
-        loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json', { speed: 0.8 });
-        loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json');
-        
-        // On mobile, reduce animation quality but keep them
-        if (isMobile) {
-          // Reduce quality for mobile performance
-          document.querySelectorAll('[id$="-animation"]').forEach(el => {
-            if (el._lottie) {
-              el._lottie.setSubframe(false);
-            }
-          });
-        }
-      }
-    }, 100);
-
-    // Timeout after 5 seconds
-    setTimeout(() => {
-      clearInterval(checkLottie);
-      if (typeof lottie === 'undefined') {
-        console.error('Lottie library failed to load');
-      }
-    }, 5000);
-  }
+  // Also try after window load
+  window.addEventListener('load', () => {
+    setTimeout(initLottieAnimations, 300);
+  });
 </script>
 
 </body>
