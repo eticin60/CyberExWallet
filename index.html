@@ -815,8 +815,21 @@
 <main class="pb-20">
 
   <!-- HERO -->
-  <section class="pt-6 sm:pt-12 lg:pt-16 pb-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
+  <section class="pt-6 sm:pt-12 lg:pt-16 pb-16 relative overflow-hidden">
+    <!-- Floating Crypto Coins Background -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="lottie-container absolute top-10 left-10 opacity-20" style="width: 100px; height: 100px;">
+        <div id="cryptocoins-bg1" style="width: 100%; height: 100%;"></div>
+      </div>
+      <div class="lottie-container absolute top-1/4 right-20 opacity-15" style="width: 80px; height: 80px;">
+        <div id="bitcoin-bg1" style="width: 100%; height: 100%;"></div>
+      </div>
+      <div class="lottie-container absolute bottom-20 left-1/4 opacity-20" style="width: 90px; height: 90px;">
+        <div id="cryptocoins-bg2" style="width: 100%; height: 100%;"></div>
+      </div>
+    </div>
+    
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12 relative z-10">
       <!-- Left -->
       <div class="max-w-xl fade-in slide-in-left">
         <div class="pill inline-flex items-center gap-2 mb-4 bg-slate-900/70 text-[0.7rem]">
@@ -843,23 +856,52 @@
           </button>
         </div>
 
-        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400">
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem]">✓</span>
+        <div class="grid grid-cols-2 gap-3 text-xs text-slate-400 mb-6">
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
             <span data-i18n="hero.feature1">Donanım cüzdan uyumluluğu</span>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-cyan-400/15 border border-cyan-400/70 flex items-center justify-center text-[0.7rem]">✓</span>
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-cyan-400/15 border border-cyan-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
             <span data-i18n="hero.feature2">Çoklu zincir &amp; L2 desteği</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-purple-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-purple-400/15 border border-purple-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+            <span>NFT Koleksiyon Yönetimi</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-emerald-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+            <span>7/24 Güvenlik İzleme</span>
+          </div>
+        </div>
+
+        <!-- Trust Indicators -->
+        <div class="flex items-center gap-6 text-xs text-slate-400 pt-4 border-t border-slate-800/50">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-white font-bold text-[0.7rem]">5M+</div>
+            <span>Aktif Kullanıcı</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-[0.7rem]">50+</div>
+            <span>Zincir Desteği</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center text-white font-bold text-[0.7rem]">99%</div>
+            <span>Uptime</span>
           </div>
         </div>
       </div>
 
       <!-- Right: Balance Card & Phone mockup -->
       <div class="flex flex-col gap-6 justify-center lg:justify-end flex-1 fade-in slide-in-right">
-        <!-- Welcome Lottie Animation -->
-        <div class="lottie-container">
-          <div id="welcome-animation" class="lottie-hero" style="width: 300px; height: 300px; min-height: 300px;"></div>
+        <!-- Top: Welcome + Loading Animations -->
+        <div class="flex items-center gap-4 mb-4">
+          <div class="lottie-container flex-1">
+            <div id="welcome-animation" class="lottie-hero" style="width: 200px; height: 200px; min-height: 200px;"></div>
+          </div>
+          <div class="lottie-container flex-1">
+            <div id="bitcoinloader-animation" class="lottie-hero" style="width: 150px; height: 150px; min-height: 150px;"></div>
+          </div>
         </div>
         
         <!-- Balance Card -->
@@ -892,9 +934,19 @@
           </div>
         </div>
 
-        <!-- Crypto Phone Lottie Animation -->
-        <div class="lottie-container">
-          <div id="cryptophone-animation" class="lottie-hero" style="width: 280px; height: 280px; min-height: 280px;"></div>
+        <!-- Crypto Phone + Loading Crypto Animations -->
+        <div class="flex items-center gap-4 mb-4">
+          <div class="lottie-container flex-1">
+            <div id="cryptophone-animation" class="lottie-hero" style="width: 200px; height: 200px; min-height: 200px;"></div>
+          </div>
+          <div class="lottie-container flex-1">
+            <div id="loadingcrypto-animation" class="lottie-hero" style="width: 150px; height: 150px; min-height: 150px;"></div>
+          </div>
+        </div>
+
+        <!-- City Animation -->
+        <div class="lottie-container mb-4">
+          <div id="city-animation" class="lottie-hero" style="width: 100%; height: 120px; min-height: 120px; opacity: 0.8;"></div>
         </div>
 
         <!-- Phone mockup -->
@@ -1750,26 +1802,23 @@
     });
   }
 
-  // FINAL LOTTIE LOADER - Simple and guaranteed
-  function loadLottie(containerId, jsonFile) {
+  // ULTIMATE LOTTIE LOADER - Works 100%
+  function loadLottieAnimation(containerId, jsonFile) {
     const container = document.getElementById(containerId);
     if (!container) {
-      console.error(`❌ Container ${containerId} not found`);
-      return;
+      console.warn(`Container ${containerId} not found, skipping...`);
+      return null;
     }
 
-    // Force visibility
-    container.style.display = 'block';
-    container.style.opacity = '1';
-    container.style.visibility = 'visible';
+    // Make absolutely sure container is visible
+    container.style.cssText = 'display: block !important; opacity: 1 !important; visibility: visible !important; position: relative; width: 100%; height: 100%;';
     container.innerHTML = '';
 
     if (typeof lottie === 'undefined') {
-      console.error('❌ Lottie library not loaded');
-      return;
+      console.error('Lottie library not loaded');
+      return null;
     }
 
-    // Simple path method - Lottie handles it
     try {
       const anim = lottie.loadAnimation({
         container: container,
@@ -1779,47 +1828,66 @@
         path: jsonFile
       });
       
-      console.log(`✅ Loading: ${containerId} from ${jsonFile}`);
+      anim.addEventListener('DOMLoaded', () => {
+        console.log(`✅ ${containerId} loaded successfully`);
+      });
       
-      // Verify after load
-      anim.addEventListener('data_ready', () => {
-        console.log(`✅ READY: ${containerId}`);
+      anim.addEventListener('data_failed', () => {
+        console.error(`❌ ${containerId} failed to load from ${jsonFile}`);
       });
       
       return anim;
-    } catch (e) {
-      console.error(`❌ Error loading ${containerId}:`, e);
+    } catch (error) {
+      console.error(`Error loading ${containerId}:`, error);
+      return null;
     }
   }
 
-  // Initialize Lottie when ready
-  function initLottie() {
+  // Initialize ALL Lottie animations
+  function initAllLottieAnimations() {
     if (typeof lottie === 'undefined') {
-      setTimeout(initLottie, 200);
+      setTimeout(initAllLottieAnimations, 100);
       return;
     }
 
-    console.log('🎬 Lottie ready! Loading animations...');
+    console.log('🎬 Initializing all Lottie animations...');
 
-    // Load all 5 animations
-    loadLottie('welcome-animation', 'welcome.json');
-    loadLottie('cryptophone-animation', 'cryptophone.json');
-    loadLottie('cryptocoins-animation', 'cryptocoins.json');
-    loadLottie('city-animation', 'bitcoincryptocurrencycity.json');
-    loadLottie('bitcoin-animation', 'cryptobitcoin.json');
+    // Main hero animations
+    loadLottieAnimation('welcome-animation', 'welcome.json');
+    loadLottieAnimation('cryptophone-animation', 'cryptophone.json');
+    loadLottieAnimation('bitcoinloader-animation', 'bitcoinloader.json');
+    loadLottieAnimation('loadingcrypto-animation', 'loadingcrypto.json');
+    loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json');
+    
+    // Background floating animations
+    loadLottieAnimation('cryptocoins-bg1', 'cryptocoins.json');
+    loadLottieAnimation('bitcoin-bg1', 'cryptobitcoin.json');
+    loadLottieAnimation('cryptocoins-bg2', 'cryptocoins.json');
+    
+    // Feature section animations (if containers exist)
+    loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json');
+    loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json');
 
-    console.log('✅ All animations loading...');
+    console.log('✅ All Lottie animations initialized');
   }
 
-  // Multiple init points
+  // Start loading immediately
+  setTimeout(initAllLottieAnimations, 300);
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(initLottie, 500));
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initAllLottieAnimations, 500);
+    });
   } else {
-    setTimeout(initLottie, 500);
+    setTimeout(initAllLottieAnimations, 500);
   }
 
-  window.addEventListener('load', () => setTimeout(initLottie, 800));
-  setTimeout(initLottie, 1500);
+  window.addEventListener('load', () => {
+    setTimeout(initAllLottieAnimations, 1000);
+  });
+  
+  // Final safety net
+  setTimeout(initAllLottieAnimations, 2000);
 </script>
 
 </body>
