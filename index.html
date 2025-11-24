@@ -823,18 +823,6 @@
 
   <!-- HERO -->
   <section class="pt-6 sm:pt-12 lg:pt-16 pb-16 relative overflow-hidden">
-    <!-- Floating Crypto Coins Background -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-      <div class="lottie-container absolute top-10 left-10 opacity-20" style="width: 100px; height: 100px;">
-        <div id="cryptocoins-bg1" style="width: 100%; height: 100%;"></div>
-      </div>
-      <div class="lottie-container absolute top-1/4 right-20 opacity-15" style="width: 80px; height: 80px;">
-        <div id="bitcoin-bg1" style="width: 100%; height: 100%;"></div>
-      </div>
-      <div class="lottie-container absolute bottom-20 left-1/4 opacity-20" style="width: 90px; height: 90px;">
-        <div id="cryptocoins-bg2" style="width: 100%; height: 100%;"></div>
-      </div>
-    </div>
     
     <!-- Welcome Animation - Top Center -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6 mb-8 relative z-10">
@@ -899,8 +887,8 @@
           <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div class="relative z-10">
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-20 h-20 rounded-xl bg-slate-800/50 flex items-center justify-center overflow-hidden">
-                <div id="trading-crypto-animation" style="width: 80px; height: 80px;"></div>
+              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-2xl font-bold shadow-lg shadow-cyan-400/50">
+                ⚡
               </div>
               <div class="flex-1">
                 <h3 class="text-lg font-bold mb-2 grad-text">Hızlı ve Güvenli İşlemler</h3>
@@ -931,10 +919,6 @@
           </div>
         </div>
 
-        <!-- Additional Crypto Animation -->
-        <div class="lottie-container mt-4 mb-4">
-          <div id="cryptocoins-animation" class="lottie-hero" style="width: 100%; height: 120px; min-height: 120px; opacity: 0.7;"></div>
-        </div>
 
         <!-- Trust Indicators with Left Animation -->
         <div class="pt-4 border-t border-slate-800/50">
@@ -971,15 +955,10 @@
         <!-- Bottom Content - Additional Features -->
         <div class="mt-8 pt-6 border-t border-slate-800/50">
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-cyan-400/50 transition-all group relative overflow-hidden">
-              <div class="absolute top-2 right-2 w-16 h-16 opacity-30">
-                <div id="crypto-protection-animation" style="width: 100%; height: 100%;"></div>
-              </div>
-              <div class="relative z-10">
-                <div class="text-3xl mb-2">🔒</div>
-                <div class="text-sm font-semibold text-cyan-300 mb-1">Güvenlik</div>
-                <div class="text-xs text-slate-400">End-to-end şifreleme</div>
-              </div>
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-cyan-400/50 transition-all group">
+              <div class="text-3xl mb-2">🔒</div>
+              <div class="text-sm font-semibold text-cyan-300 mb-1">Güvenlik</div>
+              <div class="text-xs text-slate-400">End-to-end şifreleme</div>
             </div>
             <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-emerald-400/50 transition-all group">
               <div class="text-3xl mb-2">⚡</div>
@@ -994,10 +973,6 @@
           </div>
         </div>
 
-        <!-- Bottom Animation -->
-        <div class="lottie-container mt-6">
-          <div id="loadingcrypto-animation" class="lottie-hero" style="width: 100%; height: 100px; min-height: 100px; opacity: 0.6;"></div>
-        </div>
       </div>
 
       <!-- Right: Balance Card & Phone mockup -->
@@ -1037,19 +1012,9 @@
           </div>
         </div>
 
-        <!-- Crypto Phone + Loading Crypto Animations -->
-        <div class="flex items-center gap-4 mb-4">
-          <div class="lottie-container flex-1">
-            <div id="cryptophone-animation" class="lottie-hero" style="width: 200px; height: 200px; min-height: 200px;"></div>
-          </div>
-          <div class="lottie-container flex-1">
-            <div id="loadingcrypto-animation" class="lottie-hero" style="width: 150px; height: 150px; min-height: 150px;"></div>
-          </div>
-        </div>
-
-        <!-- City Animation -->
-        <div class="lottie-container mb-4">
-          <div id="city-animation" class="lottie-hero" style="width: 100%; height: 120px; min-height: 120px; opacity: 0.8;"></div>
+        <!-- Crypto Phone Animation -->
+        <div class="lottie-container mb-4 flex justify-center lg:justify-end">
+          <div id="cryptophone-animation" class="lottie-hero" style="width: 200px; height: 200px; min-height: 200px;"></div>
         </div>
 
         <!-- Phone mockup -->
@@ -1959,7 +1924,7 @@
 
     console.log('🎬 Initializing all Lottie animations...');
 
-    // Main hero animations
+    // Main hero animations - Each animation only once
     loadLottieAnimation('welcome-animation', 'welcome.json');
     loadLottieAnimation('trading-hero-animation', 'traiding-hero-animation.json');
     loadLottieAnimation('cryptophone-animation', 'cryptophone.json');
@@ -1967,24 +1932,14 @@
     loadLottieAnimation('loadingcrypto-animation', 'loadingcrypto.json');
     loadLottieAnimation('city-animation', 'bitcoincryptocurrencycity.json');
     
-    // Background floating animations
-    loadLottieAnimation('cryptocoins-bg1', 'cryptocoins.json');
-    loadLottieAnimation('bitcoin-bg1', 'cryptobitcoin.json');
-    loadLottieAnimation('cryptocoins-bg2', 'cryptocoins.json');
-    
-    // Feature section animations (if containers exist)
+    // Feature section animations
     loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json');
     loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json');
     
-    // New animations
-    loadLottieAnimation('trading-crypto-animation', 'trading-crypto.json');
-    loadLottieAnimation('crypto-protection-animation', 'crypto-protection.json');
-    loadLottieAnimation('crypto-protection-right', 'crypto-protection.json');
-    
-    // CTA section animations - Only Crypto Protection
+    // CTA section - Crypto Protection
     loadLottieAnimation('crypto-protection-cta-main', 'crypto-protection.json');
     
-    // Stats section animations - Only Trading Crypto
+    // Stats section - Trading Crypto
     loadLottieAnimation('trading-crypto-stats', 'trading-crypto.json');
 
     console.log('✅ All Lottie animations initialized');
